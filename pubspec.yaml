@@ -1,10 +1,10 @@
 name: flutter_pos
 description: POS Android offline-first with Riverpod + go_router + Drift
-publish_to: none
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -20,7 +20,6 @@ dependencies:
   csv: ^6.0.0
   share_plus: ^10.0.2
   pdf: ^3.11.1
-
   cupertino_icons: ^1.0.8
 
 dev_dependencies:

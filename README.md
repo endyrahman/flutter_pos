@@ -1,18 +1,10 @@
 # Flutter POS (Android, Offline-First)
 
-Aplikasi POS Flutter untuk kasir (bahasa Indonesia) dengan arsitektur berlapis:
-- `data/` (schema drift/sqlite)
-- `repositories/`
-- `services/`
-- `ui/`
-
-## Stack
-- Flutter stable
+Aplikasi POS Flutter (bahasa Indonesia) untuk kasir dengan stack:
 - Riverpod
 - go_router
-- Drift (schema & migration plan disiapkan)
+- Drift (SQLite)
 - Material 3
-- flutter_lints
 
 ## Prasyarat
 - Flutter SDK stable terbaru
@@ -38,25 +30,28 @@ flutter build apk --debug
 - Admin PIN: `123456`
 - Kasir PIN: `111111`
 
-## Fitur MVP yang diimplementasikan
-- Login lokal PIN hash
+## Fitur MVP yang tersedia
+- Login lokal berbasis PIN hash + role admin/kasir
 - Seed 10 produk + stok awal
-- Screen kasir: cari produk, tambah/ubah qty cart, hitung subtotal/pajak/total, bayar cash
-- Validasi stok tidak minus
-- Simpan transaksi in-memory repository
-- Ringkasan laporan sederhana
-- Export CSV service
-- Generator teks struk thermal 58mm
+- Kasir: cari produk (autofocus), tambah item, ubah qty, hitung subtotal/pajak/total, bayar
+- Validasi stok tidak boleh minus
+- Simpan transaksi + nomor transaksi harian
+- Laporan ringkas
+- Export CSV
+- Generator struk teks thermal 58mm
 
-## Catatan penting environment CI ini
-Environment container saat pengerjaan tidak memiliki `flutter` binary dan akses unduh SDK diblokir (HTTP 403), sehingga:
-- `flutter analyze` dan `flutter test` tidak bisa dieksekusi di container ini.
-- Implementasi drift codegen (`build_runner`) tidak bisa dijalankan; schema SQL sudah disediakan di `lib/data/drift_schema.sql`.
-
-## Git Workflow
-Branch kerja: `feat/pos-mvp`.
-Jika remote sudah terhubung, jalankan:
+## Konflik PR (README.md, lib/main.dart, pubspec.yaml)
+Jika PR menampilkan konflik di tiga file ini, selesaikan dengan memilih versi branch `feat/pos-mvp` (fitur POS penuh), lalu jalankan:
 ```bash
-git push -u origin feat/pos-mvp
+git checkout feat/pos-mvp
+git fetch origin
+# jika main berubah
+git merge origin/main
+# resolve konflik, lalu
+git add README.md lib/main.dart pubspec.yaml
+git commit -m "chore: resolve merge conflicts with main"
+git push origin feat/pos-mvp
 ```
-Lalu buat PR ke `main`.
+
+## Catatan environment container ini
+Container ini tidak memiliki binary `flutter` dan akses unduh Flutter SDK diblokir, sehingga `flutter analyze` dan `flutter test` tidak bisa dijalankan di sini.
