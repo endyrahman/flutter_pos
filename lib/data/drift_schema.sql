@@ -1,0 +1,72 @@
+-- Drift/SQLite schema for POS MVP
+CREATE TABLE IF NOT EXISTS settings(
+  id INTEGER PRIMARY KEY,
+  shop_name TEXT NOT NULL,
+  shop_address TEXT NOT NULL,
+  receipt_footer TEXT NOT NULL,
+  tax_rate REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS users(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  role TEXT NOT NULL,
+  pin_hash TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS categories(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS products(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sku TEXT UNIQUE NOT NULL,
+  barcode TEXT UNIQUE,
+  name TEXT NOT NULL,
+  category_id INTEGER,
+  price INTEGER NOT NULL,
+  active INTEGER NOT NULL DEFAULT 1
+);
+CREATE TABLE IF NOT EXISTS inventories(
+  product_id INTEGER UNIQUE NOT NULL,
+  qty_on_hand INTEGER NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS stock_movements(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  product_id INTEGER NOT NULL,
+  type TEXT NOT NULL,
+  qty_delta INTEGER NOT NULL,
+  note TEXT,
+  ref_sale_id INTEGER,
+  created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS sales(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sale_no TEXT UNIQUE NOT NULL,
+  sale_date TEXT NOT NULL,
+  cashier_id INTEGER NOT NULL,
+  subtotal REAL NOT NULL,
+  discount_amount REAL NOT NULL,
+  tax_rate REAL NOT NULL,
+  tax_amount REAL NOT NULL,
+  total REAL NOT NULL,
+  paid_total REAL NOT NULL,
+  change_amount REAL NOT NULL,
+  note TEXT
+);
+CREATE TABLE IF NOT EXISTS sale_items(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sale_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  name_snapshot TEXT NOT NULL,
+  qty INTEGER NOT NULL,
+  price INTEGER NOT NULL,
+  discount_amount REAL NOT NULL,
+  line_total REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS sale_payments(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sale_id INTEGER NOT NULL,
+  method TEXT NOT NULL,
+  amount REAL NOT NULL,
+  ref_no TEXT
+);
