@@ -1,0 +1,15 @@
+# This file tracks properties of this Flutter project.
+# Used by Flutter tool and plugins.
+version:
+  revision: "manual-setup"
+  channel: "stable"
+project_type: app
+
+migration:
+  platforms:
+    - platform: root
+      create_revision: manual
+      base_revision: manual
+  unmanaged_files:
+    - 'lib/main.dart'
+    - 'ios/Runner.xcodeproj/project.pbxproj'
