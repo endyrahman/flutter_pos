@@ -19,6 +19,14 @@ class _CashierScreenState extends ConsumerState<CashierScreen> {
   double trxDiscount = 0;
   final cashController = TextEditingController();
 
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    cashController.dispose();
+    super.dispose();
+  }
+
   @override
   void dispose() {
     searchController.dispose();
@@ -47,20 +55,6 @@ class _CashierScreenState extends ConsumerState<CashierScreen> {
         .toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('POS')),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            TextField(
-              key: const Key('searchField'),
-              controller: searchController,
-              autofocus: true,
-              onChanged: (_) => setState(() {}),
-              decoration: const InputDecoration(
-                labelText: 'Cari SKU / Nama Produk',
-                prefixIcon: Icon(Icons.search),
-              ),
             ),
             const SizedBox(height: 8),
             Expanded(
