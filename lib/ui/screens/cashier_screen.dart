@@ -18,6 +18,14 @@ class _CashierScreenState extends ConsumerState<CashierScreen> {
   double trxDiscount = 0;
   final cashController = TextEditingController();
 
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    cashController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final repo = ref.read(repoProvider);
@@ -41,6 +49,7 @@ class _CashierScreenState extends ConsumerState<CashierScreen> {
                   key: const Key('searchField'),
                   controller: searchController,
                   autofocus: true,
+                  onChanged: (_) => setState(() {}),
                   decoration: const InputDecoration(labelText: 'Cari SKU / Nama Produk'),
                 ),
                 Expanded(

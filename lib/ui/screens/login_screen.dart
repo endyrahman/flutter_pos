@@ -15,6 +15,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final pinController = TextEditingController();
 
   @override
+  void dispose() {
+    pinController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Login POS')),
